@@ -5,6 +5,7 @@
 # print(page.links)
 
 import requests
+import random
 
 S = requests.Session()
 url = "https://en.wikipedia.org/w/api.php"
@@ -20,13 +21,21 @@ def searchCategory(category):
     }
 
     data = S.get(url=url, params=params).json()
-    pages = data['query']['categorymembers']
+    if 'query' in data.keys():
+        pages = data['query']['categorymembers']
+    else:
+        pages = []
 
     return pages
 
 category = "Category:Physics"
 searchResults = searchCategory(category)
+page = None
+
 while len(searchResults) > 0:
-    category = random(searchResults)
+    page = random.choice(searchResults)
+    print(page)
+    category = page['title']
     searchResults = searchCategory(category)
-print(category)
+
+# print(page)

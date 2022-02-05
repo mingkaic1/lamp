@@ -1,9 +1,9 @@
+import UserForm from './components/UserForm.js'
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        Test
-      </header>
+      <UserForm />
     </div>
   );
 }

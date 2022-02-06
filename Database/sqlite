@@ -1,0 +1,13 @@
+import sqlite3
+
+connection = sqlite3.connect("aquarium.db")
+
+cursor = connection.cursor()
+cursor.execute("INSERT INTO userInfo VALUES (1, 'chamy', 'chamy@gmail.com')")
+cursor.execute("INSERT INTO userInfo VALUES (2, 'ved', 'ved@gmail.com')")
+cursor.execute("INSERT INTO userInfo VALUES (3, 'mingkai', 'mingkai@gmail.com')")
+cursor.execute("INSERT INTO userInfo VALUES (4, 'aaron', 'aaron@gmail.com')")
+cursor.execute("INSERT INTO userInfo VALUES (5, 'whore', 'whore@gmail.com')")
+
+rows = cursor.execute("SELECT id, username, email FROM userInfo").fetchall()
+print(rows)

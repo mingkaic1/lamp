@@ -1,11 +1,17 @@
+import react from 'react';
 import UserForm from './components/UserForm.js'
 
-function App() {
-  return (
-    <div className="App">
-      <UserForm />
-    </div>
-  );
+export class App extends react.Component {
+  handleSubmitUserForm(inputValues) {
+    console.log(inputValues);
+  }
+  render() {
+    return (
+      <div className="App">
+        <UserForm onSubmit={this.handleSubmitUserForm}/>
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -14,27 +14,44 @@ export class UserForm extends react.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nameValue: "",
+            inputValues: {
+                username: "",
+                email: "",
+            }
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
     }
     handleSubmit(event) {
         event.preventDefault();
-        // Submit data
-        this.setState({
-            nameValue: "",
-        });
+        this.props.onSubmit(this.state.inputValues);
+        this.resetFields();
     }
     handleReset(event) {
+        this.resetFields();
+    }
+    resetFields() {
         this.setState({
-            nameValue: "",
+            inputValues: {
+                username: "",
+                email: "",
+            }
         });
     }
     handleNameChange(event) {
+        const inputValuesTemp = this.state.inputValues;
+        inputValuesTemp.username = event.target.value;
         this.setState({
-            nameValue: event.target.value,
+            inputValues: inputValuesTemp,
+        });
+    }
+    handleEmailChange(event) {
+        const inputValuesTemp = this.state.inputValues;
+        inputValuesTemp.email = event.target.value;
+        this.setState({
+            inputValues: inputValuesTemp,
         });
     }
     render() {
@@ -46,9 +63,17 @@ export class UserForm extends react.Component {
                         type="text"
                         id="username"
                         name="username"
-                        value={this.state.nameValue}
+                        value={this.state.inputValues.username}
                         onChange={this.handleNameChange}
                         placeholder="Username"
+                    />
+                    <input 
+                        type="text"
+                        id="email"
+                        name="email"
+                        value={this.state.inputValues.email}
+                        onChange={this.handleEmailChange}
+                        placeholder="Email"
                     />
                     <button type="submit">
                         Submit

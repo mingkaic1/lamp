@@ -1,9 +1,3 @@
-# import wikipedia
-#
-# searchResults = wikipedia.search("hello")
-# page = wikipedia.page(searchResults[0],auto_suggest=False)
-# print(page.links)
-
 import requests
 import random
 
@@ -28,14 +22,44 @@ def searchCategory(category):
 
     return pages
 
-category = "Category:Physics"
-searchResults = searchCategory(category)
-page = None
+def selectRandomArticle(category):
+    params = {
+        "action": "query",
+        "cmtitle": category,
+        "cmtype": "page",
+        "cmlimit": "20",
+        "list": "categorymembers",
+        "format": "json"
+    }
 
-while len(searchResults) > 0:
-    page = random.choice(searchResults)
-    print(page)
-    category = page['title']
+    data = S.get(url=url, params=params).json()
+    if 'query' in data.keys():
+        pages = data['query']['categorymembers']
+    else:
+        pages = []
+
+    if pages != []:
+        return random.choice(pages)
+    return None
+
+
+
+def findArticle(category):
     searchResults = searchCategory(category)
+    page = None
+    depth = 0
 
-# print(page)
+    while len(searchResults) > 0:
+        page = random.choice(searchResults)
+        print(page)
+        category = page['title']
+        searchResults = searchCategory(category)
+        depth += 1
+        if random.random() > 1.0/(depth + 1):
+            article = selectRandomArticle(category)
+            if (article != None):
+                return article
+
+    return selectRandomArticle(category)
+
+print(findArticle("Category:Physics"))

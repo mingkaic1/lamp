@@ -15,26 +15,35 @@ export class UserForm extends react.Component {
         super(props);
         this.state = {
             nameValue: "",
+            emailValue: "",
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
     }
     handleSubmit(event) {
         event.preventDefault();
         // Submit data
-        this.setState({
-            nameValue: "",
-        });
+        this.resetFields();
     }
     handleReset(event) {
+        this.resetFields();
+    }
+    resetFields() {
         this.setState({
             nameValue: "",
+            emailValue: "",
         });
     }
     handleNameChange(event) {
         this.setState({
             nameValue: event.target.value,
+        });
+    }
+    handleEmailChange(event) {
+        this.setState({
+            emailValue: event.target.value,
         });
     }
     render() {
@@ -49,6 +58,14 @@ export class UserForm extends react.Component {
                         value={this.state.nameValue}
                         onChange={this.handleNameChange}
                         placeholder="Username"
+                    />
+                    <input 
+                        type="text"
+                        id="email"
+                        name="email"
+                        value={this.state.emailValue}
+                        onChange={this.handleEmailChange}
+                        placeholder="Email"
                     />
                     <button type="submit">
                         Submit

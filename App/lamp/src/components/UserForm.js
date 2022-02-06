@@ -14,8 +14,10 @@ export class UserForm extends react.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nameValue: "",
-            emailValue: "",
+            inputValues: {
+                username: "",
+                email: "",
+            }
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReset = this.handleReset.bind(this);
@@ -24,7 +26,7 @@ export class UserForm extends react.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        // Submit data
+        this.props.onSubmit(this.state.inputValues);
         this.resetFields();
     }
     handleReset(event) {
@@ -32,18 +34,24 @@ export class UserForm extends react.Component {
     }
     resetFields() {
         this.setState({
-            nameValue: "",
-            emailValue: "",
+            inputValues: {
+                username: "",
+                email: "",
+            }
         });
     }
     handleNameChange(event) {
+        const inputValuesTemp = this.state.inputValues;
+        inputValuesTemp.username = event.target.value;
         this.setState({
-            nameValue: event.target.value,
+            inputValues: inputValuesTemp,
         });
     }
     handleEmailChange(event) {
+        const inputValuesTemp = this.state.inputValues;
+        inputValuesTemp.email = event.target.value;
         this.setState({
-            emailValue: event.target.value,
+            inputValues: inputValuesTemp,
         });
     }
     render() {
@@ -55,7 +63,7 @@ export class UserForm extends react.Component {
                         type="text"
                         id="username"
                         name="username"
-                        value={this.state.nameValue}
+                        value={this.state.inputValues.username}
                         onChange={this.handleNameChange}
                         placeholder="Username"
                     />
@@ -63,7 +71,7 @@ export class UserForm extends react.Component {
                         type="text"
                         id="email"
                         name="email"
-                        value={this.state.emailValue}
+                        value={this.state.inputValues.email}
                         onChange={this.handleEmailChange}
                         placeholder="Email"
                     />

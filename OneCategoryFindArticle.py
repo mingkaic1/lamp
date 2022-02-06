@@ -4,7 +4,7 @@ import random
 S = requests.Session()
 url = "https://en.wikipedia.org/w/api.php"
 
-def searchCategory(category):
+def getSubcategories(category):
     params = {
         "action": "query",
         "cmtitle": category,
@@ -45,7 +45,7 @@ def selectRandomArticle(category):
 
 
 def findArticle(category):
-    searchResults = searchCategory(category)
+    searchResults = getSubcategories(category)
     page = None
     depth = 0
 
@@ -53,7 +53,7 @@ def findArticle(category):
         page = random.choice(searchResults)
         print(page)
         category = page['title']
-        searchResults = searchCategory(category)
+        searchResults = getSubcategories(category)
         depth += 1
         if random.random() > 1.0/(depth + 1):
             article = selectRandomArticle(category)
